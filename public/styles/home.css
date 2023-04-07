@@ -1,0 +1,134 @@
+/* This file is for home.html */
+img.founder-image {
+    max-height: 25vh;
+    width: auto;
+
+    border-radius: 24px;
+    margin: 1rem 2rem;
+}
+
+section p {
+    max-width: 50vw;
+}
+
+article {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 0 .5rem;
+    width: 100%;
+}
+
+article .big-icon {
+    font-size: 6rem;
+    margin-bottom: .5rem;
+    color: #ccc;
+}
+
+.goProjects { padding: 2rem 10vw; }
+.goProjects h2, .goProjects button {
+    margin: 0 .5rem;
+}
+.goProjects button i {
+    margin: 0 .5rem;
+    transition: margin .25s ease-in-out;
+}
+.goProjects button:hover i {
+    margin: 0 .5rem 0 2rem;
+}
+
+.skill .fa-plus {
+    font-size: 2rem;
+    margin: auto .125rem;
+}
+.skill .fa-brands { transition: .25s ease-in-out; }
+.skill .fa-brands:hover { transform: scale(1.1); }
+/* Each skill has its own color */
+.skill .fa-square-js:hover { color: #F9C74F; }
+.skill .fa-java:hover { color: #F94144; }
+.skill .fa-html5:hover { color: #F3722C; }
+.skill .fa-css3-alt:hover { color: #577590; }
+.skill .fa-php:hover { color: #43AA8B; }
+
+article h3 {
+    font-size: 1.5rem;
+    white-space: nowrap;
+}
+
+.skill .stars {
+    margin-top: .25rem;
+}
+
+.skill .stars i {
+    font-size: 1rem;
+    margin: 0;
+    transition: color .25s ease-in-out;
+}
+.skill .stars:hover i { color: #F8961E; }
+
+.project blockquote {
+    background-color: #3f3f3f;
+    padding: .5rem 1rem;
+    margin: .5rem 0 0;
+    border-radius: 4px;
+    transition: margin .25s ease-in-out;
+}
+.project:hover blockquote {
+    margin: -0.25rem 0 0;
+}
+.project:hover h3 {
+    margin-bottom: .25rem;
+}
+
+.project .dropper {
+    width: 0; height: 0; position: relative;
+    border-left: 2rem solid transparent;
+    border-top: 2rem solid #3f3f3f;
+    margin-left: 60%;
+}
+
+.project h3 {
+    position: relative;
+    top: -1.5rem;
+}
+
+.profile {
+    background-color: #333333;
+    padding: 1rem 1rem;
+    border-radius: 24px;
+    transition: background-color .25s ease-in-out;
+}
+.profile:nth-child(1):hover {
+    background-color: #1A232B;
+}
+.profile:nth-child(2):hover {
+    background-color: #522E03;
+}
+
+.education {
+    font-style: italic;
+    color: #cccccc;
+}
+
+.why-delay h2, .why-delay h3 {
+    font-style: italic;
+}
+.why-delay h2 {
+    font-size: 3rem;
+}
+.why-delay h3 {
+    font-size: 2.5rem;
+    font-weight: 200;
+}
+
+@media screen and (max-width: 900px) {
+    article {
+        margin-bottom: 2rem;
+    }
+
+    .forceRow {
+        /* In case a row shouldn't become a col */
+        flex-flow: row nowrap;
+    }
+}

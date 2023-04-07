@@ -1,0 +1,86 @@
+form { min-width: 75%; }
+form.thinner { min-width: 50%; }
+
+form label {
+    font-size: 1.25rem;
+    text-align: left;
+    font-family: 'Raleway', sans-serif;
+    margin-right: .25rem;
+}
+
+input, button, select, textarea {
+    font-size: 1.25rem;
+    text-align: left;
+    font-family: 'Raleway', sans-serif;
+
+    margin-bottom: 0.25rem;
+    padding: .25rem .5rem;
+
+    width: 100%;
+
+    background-color: #2f2f2f;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    transition: border 0.25s ease-in-out, background-color 0.25s ease-in-out;
+}
+input:hover, button:hover, select:hover, textarea:hover {
+    border: 1px solid #cccccc;
+}
+input:focus, button:focus, select:focus, textarea:focus {
+    background-color: #333333;
+    border: 1px solid #ffffff;
+    outline: none;
+}
+button:hover, label:hover, select:hover {
+    cursor: pointer;
+}
+
+form button {
+    /* We use mostly the same properties as the other inputs, but we override some stuff here */
+    font-family: 'Righteous', serif;
+    font-size: 1.5rem;
+
+    padding: .25rem 4rem;
+    margin: 1rem 0;
+    width: auto;
+}
+
+
+form .col {
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.settingWrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    margin: 0 .5rem;
+    width: 100%;
+}
+
+.settingWrapper.shrunk {
+    width: 25%;
+}
+
+a { color: #cccccc; }
+a:hover { color: #ffffff; }
+a:focus { color: #aaaaff; }
+
+.rainbow-1:hover { border-color: #CD060A; }
+.rainbow-1:focus { border-color: #F94144; }
+.rainbow-2:hover { border-color: #B5460B; }
+.rainbow-2:focus { border-color: #F3722C; }
+.rainbow-3:hover { border-color: #B66706; }
+.rainbow-3:focus { border-color: #F8961E; }
+.rainbow-4:hover { border-color: #D39608; }
+.rainbow-4:focus { border-color: #F9C74F; }
+.rainbow-5:hover { border-color: #608B3E; }
+.rainbow-5:focus { border-color: #90BE6D; }
+.rainbow-6:hover { border-color: #2D705C; }
+.rainbow-6:focus { border-color: #43AA8B; }
+.rainbow-7:hover { border-color: #3A4E60; }
+.rainbow-7:focus { border-color: #577590; }
