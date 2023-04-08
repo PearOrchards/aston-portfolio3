@@ -85,7 +85,7 @@
 
     // All good, let's go!!!!
     $keyword = null; $project = null;
-    if ($_GET['mode'] == 'modify') {
+    if (isset($_GET['mode']) && $_GET['mode'] == 'modify') {
         $keyword = "Modify";
         try {
             $project = $db->getProject($_GET['pid']);
@@ -112,7 +112,7 @@
         <a href="projects.php">Return to projects...</a>
         <form action="upsert.php" method="post" onsubmit="return confirm('Are you sure you want to do this? This change will be irreversible!');">
             <!-- Doing this as HTML forms do not officially support PUT or PATCH methods. But we'll do this, so we know how to process the request once it's submitted -->
-            <input type="hidden" name="submitted" value="<?= $_GET['mode'] == 'new' ? 'PUT' : 'PATCH' ?>">
+            <input type="hidden" name="submitted" value="<?= (isset($_GET['mode']) && $_GET['mode'] == 'new') ? 'PUT' : 'PATCH' ?>">
             <!-- Values are only set when updating (PATCH) -->
             <input type="hidden" name="pid" value="<?= $project->pid ?? null ?>">
             <!-- CSRF token -->
