@@ -17,7 +17,6 @@
 <main>
     <?php
     // IMPORTS
-    require_once __DIR__ . '/lib/database.php';
     require_once __DIR__ . '/lib/user.php';
 
     $message = "";
@@ -42,7 +41,7 @@
             return;
         }
 
-        $db = new Database();
+        $db = new UserDatabase();
         try {
             $user = $db->login($_POST["username"], $_POST["password"]);
             session_start();

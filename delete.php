@@ -17,10 +17,11 @@
 <main>
     <section>
         <?php
-            require_once __DIR__ . '/lib/database.php';
             require_once __DIR__ . '/lib/project.php';
+            require_once __DIR__ . '/lib/user.php';
             require_once __DIR__ . '/components/collapseElement.php';
-            $db = new Database();
+            $udb = new UserDatabase();
+            $pdb = new ProjectDatabase();
 
             if (!isset($_SESSION['user'])) {
                 $_SESSION['snack'] = array(
@@ -39,7 +40,7 @@
                 }
 
                 try {
-                    $db->deleteProject($_POST['pid']);
+                    $pdb->deleteProject($_POST['pid']);
                     $_SESSION['snack'] = array(
                         'type' => 0,
                         'message' => 'Project deleted successfully!'
@@ -72,7 +73,7 @@
 
             $project = null;
             try {
-                $project = $db->getProject($_GET['pid']);
+                $project = $pdb->getProject($_GET['pid']);
             } catch (Exception $e) {
                 $_SESSION['snack'] = array(
                     'type' => 2,
@@ -82,8 +83,8 @@
             }
 
 
-            $username = $db->getNameFromUID($project->uid);
-            $email = $db->getEmailFromUID($project->uid);
+            $username = $udb->getNameFromUID($project->uid);
+            $email = $udb->getEmailFromUID($project->uid);
             $assigned = $username . ' (' . $email . ')';
             collapseElement($project->pid, $project->title, $project->description, $project->phase, $project->startDate, $project->endDate, $assigned, true);
         ?>

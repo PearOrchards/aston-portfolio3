@@ -40,11 +40,12 @@
         </form>
 
         <?php
-            require_once __DIR__ . '/lib/database.php';
             require_once __DIR__ . '/lib/project.php';
+            require_once __DIR__ . '/lib/user.php';
             require_once __DIR__ . '/components/collapseElement.php';
 
-            $db = new Database();
+            $pdb = new ProjectDatabase();
+            $udb = new UserDatabase();
             $projects = null;
 
             if (isset($_POST['searchBy'])) {
@@ -52,7 +53,7 @@
                     case "startDate":
                         try {
                             $date = new DateTime($_POST['searchText']);
-                            $projects = $db->getProjectsByStartDate($date);
+                            $projects = $pdb->getProjectsByStartDate($date);
                         } catch (Exception $e) {
                             echo '<p class="error">Error trying to search by date!</p>';
                         }
@@ -61,7 +62,7 @@
                     case "endDate":
                         try {
                             $date = new DateTime($_POST['searchText']);
-                            $projects = $db->getProjectsByEndDate($date);
+                            $projects = $pdb->getProjectsByEndDate($date);
                         } catch (Exception $e) {
                             echo '<p class="error">Error trying to search by date!</p>';
                         }
@@ -69,19 +70,19 @@
 
                     case "name":
                         if ($_POST['searchText'] != '') {
-                            $projects = $db->getProjectsByName(htmlspecialchars($_POST['searchText']));
+                            $projects = $pdb->getProjectsByName(htmlspecialchars($_POST['searchText']));
                             break;
                         }
 
                     default:
-                        $projects = $db->getAllProjects();
+                        $projects = $pdb->getAllProjects();
                         break;
                 }
-            } else $projects = $db->getAllProjects();
+            } else $projects = $pdb->getAllProjects();
 
             foreach ($projects as $project) {
-                $username = $db->getNameFromUID($project->uid);
-                $email = $db->getEmailFromUID($project->uid);
+                $username = $udb->getNameFromUID($project->uid);
+                $email = $udb->getEmailFromUID($project->uid);
                 $assigned = $username . ' (' . $email . ')';
                 collapseElement($project->pid, $project->title, $project->description, $project->phase, $project->startDate, $project->endDate, $assigned);
             }

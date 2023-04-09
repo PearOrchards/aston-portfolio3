@@ -8,13 +8,14 @@
 <body>
 <?php
     require_once __DIR__ . '/components/navbar.php';
-    require_once __DIR__ . '/lib/database.php';
     require_once __DIR__ . '/lib/project.php';
+    require_once __DIR__ . '/lib/user.php';
 
-    $db = new Database();
+    $udb = new UserDatabase();
+    $pdb = new ProjectDatabase();
 
     function handleSubmit(): void {
-        global $db; // Use the global database object, rather than redefining one.
+        global $pdb; // Use the global ProjectDatabase, rather than redefining one.
         try {
             // CSRF protection
             if (isset($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
@@ -30,10 +31,10 @@
             $newProject = new Project(0, $_POST['name'], $startTime, $endTime, $_POST['phase'], $_POST['description'], $_POST['uid']);
 
             if ($_POST['submitted'] == 'PUT') {
-                $db->createProject($newProject);
+                $pdb->createProject($newProject);
             } else if ($_POST['submitted'] == 'PATCH') {
                 $pid = $_POST['pid'];
-                $db->modifyProject($pid, $newProject);
+                $pdb->modifyProject($pid, $newProject);
             }
 
             $_SESSION['snack'] = array(
@@ -88,7 +89,7 @@
     if (isset($_GET['mode']) && $_GET['mode'] == 'modify') {
         $keyword = "Modify";
         try {
-            $project = $db->getProject($_GET['pid']);
+            $project = $pdb->getProject($_GET['pid']);
         } catch (Exception $e) {
             $_SESSION['snack'] = array(
                 'type' => 2,
@@ -154,8 +155,8 @@
                     <label for="uid">Assigned to:</label>
                     <select name="uid" id="uid" class="rainbow-6">
                         <?php
-                            // $db is already a thing.
-                            $users = $db->listUsers();
+                            // $udb is already defined.
+                            $users = $udb->listUsers();
                             foreach ($users as $user) {
                                 $pretty = htmlspecialchars($user['uid'] . " - " . $user['username']);
                                 $selected = (isset($project) && $project->uid == $user['uid']) ? "selected" : "";

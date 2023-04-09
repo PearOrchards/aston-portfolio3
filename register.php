@@ -17,7 +17,6 @@
 <main>
     <?php
     // IMPORTS
-    require_once __DIR__ . '/lib/database.php';
     require_once __DIR__ . '/lib/user.php';
 
     $message = "";
@@ -51,7 +50,7 @@
         }
 
         // using the imported database class, create a new instance of it.
-        $db = new Database();
+        $db = new UserDatabase();
 
         try {
             $newUser = $db->createUser($_POST["username"], $_POST["email"], $_POST["password"]);
