@@ -44,7 +44,6 @@
         $db = new UserDatabase();
         try {
             $user = $db->login($_POST["username"], $_POST["password"]);
-            session_start();
             $_SESSION["user"] = $user->username;
             $_SESSION['snack'] = array(
                 'type' => 0,
@@ -52,7 +51,11 @@
             );
             header("Location: projects.php");
         } catch (Exception $e) {
-            $message = "USER ERROR: " . $e->getMessage();
+            $_SESSION['snack'] = array(
+                'type' => 2,
+                'message' => 'Failed to login! ' . $e->getMessage()
+            );
+            header("Location: login.php");
         }
 
     } else {

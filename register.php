@@ -54,15 +54,17 @@
 
         try {
             $newUser = $db->createUser($_POST["username"], $_POST["email"], $_POST["password"]);
-            session_start();
-            $_SESSION["user"] = $newUser->username;
             $_SESSION['snack'] = array(
                 'type' => 0,
-                'message' => 'Thank you for registering, ' . htmlspecialchars($newUser->username) . ', and welcome!'
+                'message' => 'Thank you for registering, now please log in.'
             );
-            header("Location: projects.php");
+            header("Location: login.php");
         } catch (Exception $e) {
-            $message = "USER ERROR: " . $e->getMessage();
+            $_SESSION['snack'] = array(
+                'type' => 2,
+                'message' => 'Failed to create user! ' . $e->getMessage()
+            );
+            header("Location: register.php");
         }
     } else {
         try {

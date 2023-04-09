@@ -33,7 +33,16 @@ class UserDatabase {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($result) {
-            throw new Exception("User with that username already exists");
+            throw new Exception("User with that username already exists!");
+        }
+
+        // Check a user with that email doesn't already exist.
+        $stmt = $this->userConnection->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            throw new Exception("User with that email already exists! Have you tried logging in?");
         }
 
         // Hash password, then insert into database.
@@ -62,10 +71,8 @@ class UserDatabase {
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC); // Fetch the result as an associative array.
-        if (!$result) {
-            throw new Exception("No user found");
-        } else if (!password_verify($password, $result['password'])) {
-            throw new Exception("Incorrect password");
+        if (!$result || !password_verify($password, $result['password'])) {
+            throw new Exception("No user found!"); // Throw same exception as if user doesn't exist, to prevent leaking information.
         } else {
             return new User($result['username'], $result['email']);
         }
