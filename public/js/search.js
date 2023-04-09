@@ -8,7 +8,8 @@ window.addEventListener('load', () => { // on page load
                 searchText.type = "text";
                 break;
 
-            case "date":
+            case "startDate":
+            case "endDate":
                 searchText.type = "date";
                 break;
         }

@@ -145,6 +145,18 @@
         }
 
         /**
+         * Returns all projects with a given start date.
+         * @param DateTime $date The start date to search for.
+         * @return Project[] An array of all projects with the given date
+         */
+        public function getProjectsByStartDate(DateTime $date): array {
+            $stmt = $this->conn->prepare("SELECT * FROM projects WHERE start_date = :date");
+            $correctDate = $date->format('Y-m-d');
+            $stmt->bindParam(':date', $correctDate);
+            return $this->executeAndReturnProjects($stmt);
+        }
+
+        /**
          * INTERNAL USE ONLY: Executes a statement and returns the projects to remove duplicate code.
          * @param $stmt PDOStatement The statement to execute.
          * @return Project[] An array of all projects returned by the statement.

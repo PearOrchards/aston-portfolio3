@@ -30,7 +30,8 @@
                 <label for="searchBy">Search by: </label>
                 <select name="searchBy" id="searchBy" required>
                     <option value="name" selected>Name</option>
-                    <option value="date">End Date</option>
+                    <option value="startDate">Start Date</option>
+                    <option value="endDate">End Date</option>
                 </select>
             </div>
             <div class="col bottom">
@@ -46,18 +47,37 @@
             $db = new Database();
             $projects = null;
 
-            if (isset($_POST['searchBy']) && $_POST['searchBy'] == 'date') {
-                try {
-                    $date = new DateTime($_POST['searchText']);
-                    $projects = $db->getProjectsByEndDate($date);
-                } catch (Exception $e) {
-                    echo '<p class="error">Error trying to search by date!</p>';
+            if (isset($_POST['searchBy'])) {
+                switch ($_POST['searchBy']) {
+                    case "startDate":
+                        try {
+                            $date = new DateTime($_POST['searchText']);
+                            $projects = $db->getProjectsByStartDate($date);
+                        } catch (Exception $e) {
+                            echo '<p class="error">Error trying to search by date!</p>';
+                        }
+                        break;
+
+                    case "endDate":
+                        try {
+                            $date = new DateTime($_POST['searchText']);
+                            $projects = $db->getProjectsByEndDate($date);
+                        } catch (Exception $e) {
+                            echo '<p class="error">Error trying to search by date!</p>';
+                        }
+                        break;
+
+                    case "name":
+                        if ($_POST['searchText'] != '') {
+                            $projects = $db->getProjectsByName(htmlspecialchars($_POST['searchText']));
+                            break;
+                        }
+
+                    default:
+                        $projects = $db->getAllProjects();
+                        break;
                 }
-            } else if (isset($_POST['searchBy']) && $_POST['searchBy'] == 'name' && $_POST['searchText'] != '') {
-                $projects = $db->getProjectsByName(htmlspecialchars($_POST['searchText']));
-            } else {
-                $projects = $db->getAllProjects();
-            }
+            } else $projects = $db->getAllProjects();
 
             foreach ($projects as $project) {
                 $username = $db->getNameFromUID($project->uid);
